@@ -26,7 +26,7 @@
 コマンドを実行
 
 ```
-composer update
+composer install
 ```
 
 <h2>3. データベースの構築</h2>
