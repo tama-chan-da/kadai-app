@@ -35,6 +35,11 @@ class PostController extends Controller
             return redirect('/login');
         }
 
+        $rules = [
+            'post.index' => 'min:1|max:140'
+        ];
+        $messages = ['required' => '必須項目です', 'max' => '140文字以下にしてください。'];
+
         // ログイン中のユーザーの情報を取得する
         $loginUser = Session::get('user');
 
