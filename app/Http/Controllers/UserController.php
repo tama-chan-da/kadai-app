@@ -126,4 +126,9 @@ class UserController extends Controller
 
         return redirect('/');
     }
+    public function index()
+    {
+        $loginUser = auth()->user();
+        return view('home', compact('loginUser'));
+    }
 }
