@@ -24,7 +24,7 @@
                 <div class="time-stamp">{{ $post->created_at }}</div>
             </a>
 
-            @if($loginUser->id == $user->id)
+            @if($isOwnPost)
 
             <div class="menu">
                 <div class="menu-item font-blue">
