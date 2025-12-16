@@ -123,9 +123,24 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //TODO 登録処理
+        //メールアドレスが重複していないか
+
+        $emailExists = User::where('email', $request->email)->exists();
+        $errorMessage = 'このメールアドレスは既に使用されています';
+
+        if ($emailExists) {
+            return view('signup', compact('errorMessage'));
+        }
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ], [
+            'email.unique' => 'このメールアドレスは既に使用されています',
+        ]);
 
         return redirect('/');
     }
+
     public function index()
     {
         $loginUser = auth()->user();
