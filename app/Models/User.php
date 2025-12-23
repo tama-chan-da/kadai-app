@@ -83,4 +83,13 @@ class User extends Model
             ->first()
             ->delete();
     }
+
+    /**
+     * ユーザーを保存する
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 }

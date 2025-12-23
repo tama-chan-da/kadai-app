@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller,
     Session;
 use App\Models\User;
 
+
+
 class UserController extends Controller
 {
     /**
@@ -125,21 +127,29 @@ class UserController extends Controller
         //TODO 登録処理
         //メールアドレスが重複していないか
 
-        $emailExists = User::where('email', $request->email)->exists();
-        $errorMessage = 'このメールアドレスは既に使用されています';
-
-        if ($emailExists) {
-            return view('signup', compact('errorMessage'));
-        }
+        $errorMessage = 'このメールアドレスは既に使用されいるか、条件を満たしていません。';
 
         $request->validate([
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
         ], [
-            'email.unique' => 'このメールアドレスは既に使用されています',
+            'email.unique' => $errorMessage
         ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        Session::put('user', $user);
 
         return redirect('/');
     }
+
+
 
     public function index()
     {
