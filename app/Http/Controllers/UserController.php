@@ -127,14 +127,20 @@ class UserController extends Controller
         //TODO 登録処理
         //メールアドレスが重複していないか
 
-        $errorMessage = 'このメールアドレスは既に使用されいるか、条件を満たしていません。';
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
+            'email' => 'required|email|unique:users,email|regex:/^[\x21-\x7E]+$/',
+            'password' => 'required|min:8|regex:/^[\x21-\x7E]+$/',
         ], [
-            'email.unique' => $errorMessage
+            'name.required' => '名前は必須です。',
+            'email.required' => 'メールアドレスは必須です。',
+            'password.required' => 'パスワードは必須です。',
+            'email.unique' => 'このメールアドレスは既に使用されいます。',
+            'email.email' => '正しいメール形式になっていません。',
+            'email.regex' => '使用できない文字が含まれています。',
+            'password.regex' => '使用できない文字が含まれています。',
+            'password.min' => 'パスワードが短すぎます。',
         ]);
 
         User::create([

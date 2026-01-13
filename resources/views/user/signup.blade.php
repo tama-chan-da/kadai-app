@@ -47,13 +47,26 @@
             </div>
 
             <div class="signup-button">
-                <button class="button-white" type="submit">登録完了</button>
+                <button class="button-white" type="submit" id="signup-button">登録完了</button>
             </div>
         </form>
     </div>
 </body>
+<script>
+    let SignupButton = document.getElementById("signup-button");
+    if (SignupButton) {
+        SignupButton.addEventListener("click", function (event) {
+            const password = document.getElementById("password")
+            if (password.value.length < 8) {
+                alert("パスワードが短すぎます。");
+                event.preventDefault()
+            }
 
+        });
+    }
+</script>
 <script src="{{ asset('/js/app.js') }}"></script>
+
 <style scoped>
     .signup-page {
         display: flex;
