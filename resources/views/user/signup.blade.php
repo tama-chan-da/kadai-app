@@ -34,6 +34,7 @@
                 <div class="error">{{ $message }}</div>
                 @enderror
 
+                <p id="error" style="color: red;"></p>
             </div>
 
             <div class="form-item name">
@@ -53,17 +54,20 @@
     </div>
 </body>
 <script>
-    let SignupButton = document.getElementById("signup-button");
-    if (SignupButton) {
-        SignupButton.addEventListener("click", function (event) {
-            const password = document.getElementById("password")
-            if (password.value.length < 8) {
-                alert("パスワードが短すぎます。");
-                event.preventDefault()
-            }
 
-        });
-    }
+    let signupButton = document.getElementById("signup-button");
+    signupButton.disabled = true;
+
+    password.addEventListener("input", function (event) {
+        if (password.value.length < 8) {
+            signupButton.disabled = true;
+            document.getElementById("error").textContent = "※8文字以上のパスワードを入力してください";
+        } else {
+            signupButton.disabled = false;
+            document.getElementById("error").textContent = "";
+        }
+    });
+
 </script>
 <script src="{{ asset('/js/app.js') }}"></script>
 
